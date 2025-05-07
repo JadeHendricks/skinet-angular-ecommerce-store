@@ -1,0 +1,11 @@
+/Users/jadeh/Desktop/DEV/skinet-angular-ecommerce-store/Core/bin/Debug/net9.0/Core.deps.json
+/Users/jadeh/Desktop/DEV/skinet-angular-ecommerce-store/Core/bin/Debug/net9.0/Core.dll
+/Users/jadeh/Desktop/DEV/skinet-angular-ecommerce-store/Core/bin/Debug/net9.0/Core.pdb
+/Users/jadeh/Desktop/DEV/skinet-angular-ecommerce-store/Core/obj/Debug/net9.0/Core.GeneratedMSBuildEditorConfig.editorconfig
+/Users/jadeh/Desktop/DEV/skinet-angular-ecommerce-store/Core/obj/Debug/net9.0/Core.AssemblyInfoInputs.cache
+/Users/jadeh/Desktop/DEV/skinet-angular-ecommerce-store/Core/obj/Debug/net9.0/Core.AssemblyInfo.cs
+/Users/jadeh/Desktop/DEV/skinet-angular-ecommerce-store/Core/obj/Debug/net9.0/Core.csproj.CoreCompileInputs.cache
+/Users/jadeh/Desktop/DEV/skinet-angular-ecommerce-store/Core/obj/Debug/net9.0/Core.dll
+/Users/jadeh/Desktop/DEV/skinet-angular-ecommerce-store/Core/obj/Debug/net9.0/refint/Core.dll
+/Users/jadeh/Desktop/DEV/skinet-angular-ecommerce-store/Core/obj/Debug/net9.0/Core.pdb
+/Users/jadeh/Desktop/DEV/skinet-angular-ecommerce-store/Core/obj/Debug/net9.0/ref/Core.dll
