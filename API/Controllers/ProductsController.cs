@@ -22,7 +22,7 @@ namespace API.Controllers
             return await context.Products.ToListAsync();
         }
 
-        [HttpGet("{id}:int")] //api/products/1
+        [HttpGet("{id:int}")] //api/products/1
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
             var product = await context.Products.FindAsync(id);
@@ -41,5 +41,39 @@ namespace API.Controllers
 
             return product;
         }
+
+        [HttpPut("{id:int}")]
+        public async Task<ActionResult> UpdateProduct(int id, Product product)
+        {
+            if (product.Id != id || !ProductExists(id)) return BadRequest("Cannot update this product");
+
+            // letting entity framework know that the product has been modified
+            context.Entry(product).State = EntityState.Modified;
+
+            await context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult> DeleteProduct(int id)
+        {
+            var product = await context.Products.FindAsync(id);
+
+            if (product == null) return NotFound();
+
+            //updating the database
+            // this will not delete the product from the database, it will just mark it as deleted
+            context.Products.Remove(product);
+
+            await context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        private bool ProductExists(int id)
+        {
+            return context.Products.Any(p => p.Id == id);
+        }   
     }
 }
