@@ -10,12 +10,17 @@ namespace API.Controllers
     [Route("api/[controller]")]
     public class ProductsController(IProductRepository repo) : ControllerBase
     {
+        // api/products
+        // this will return a list of products from the database
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<Product>>> GetProducts()
+        public async Task<ActionResult<IReadOnlyList<Product>>> GetProducts(string? brand, string? type, string? sort)
         {
-            return Ok(await repo.GetProductsAsync());
+            return Ok(await repo.GetProductsAsync(brand, type, sort));
         }
 
+
+        // api/products/1
+        // this will return a single product from the database
         [HttpGet("{id:int}")] //api/products/1
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
@@ -26,6 +31,8 @@ namespace API.Controllers
             return product;
         }
 
+        // api/products
+        // this will create a new product in the database
         [HttpPost]
         public async Task<ActionResult<Product>> CreateProduct(Product product)
         {
@@ -39,6 +46,8 @@ namespace API.Controllers
             return BadRequest("Problem creating product");
         }
 
+        // api/products/1
+        // this will update the product in the database
         [HttpPut("{id:int}")]
         public async Task<ActionResult> UpdateProduct(int id, Product product)
         {
@@ -55,6 +64,8 @@ namespace API.Controllers
             return BadRequest();
         }
 
+        // api/products/1
+        // this will delete the product from the database
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> DeleteProduct(int id)
         {
@@ -70,6 +81,22 @@ namespace API.Controllers
                 return NoContent();
             }
             return BadRequest("Problem deleting the product");
+        }
+
+        // api/products/brands
+        // this will return a list of product brands
+        [HttpGet("brands")]
+        public async Task<ActionResult<IReadOnlyList<string>>> GetProductBrands()
+        {
+            return Ok(await repo.GetBrandsAsync());
+        }
+
+        // api/products/types
+        // this will return a list of product types
+        [HttpGet("types")]
+        public async Task<ActionResult<IReadOnlyList<string>>> GetProductTypes()
+        {
+            return Ok(await repo.GetTypesAsync());
         }
 
         private bool ProductExists(int id)
