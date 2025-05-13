@@ -1,5 +1,6 @@
 using Core.Entities;
 using Core.Interface;
+using Core.Specifications;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,7 +16,12 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<IReadOnlyList<Product>>> GetProducts(string? brand, string? type, string? sort)
         {
-            return Ok(await repo.ListAllAsync());
+            var specification = new ProductSpecification(brand, type, sort);
+            // this will return a list of products from the database
+            // the specification will be used to filter the products based on the brand and type
+            var products = await repo.ListAsync(specification);
+
+            return Ok(products);
         }
 
 
