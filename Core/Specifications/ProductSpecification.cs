@@ -6,7 +6,7 @@ public class ProductSpecification : BaseSpecification<Product>
 {
     // when we say "base" here we are referring to the constructor of the base class
     // and we are passing the criteria to the base class constructor i.e BaseSpecification
-    // this is a constructor chaining
+    // this is a constructor chaining (we are building our where clause in the base class)
     public ProductSpecification(string? brand, string? type, string? sort) : base(x =>
         (string.IsNullOrEmpty(brand) || x.Brand == brand) &&
         (string.IsNullOrEmpty(type) || x.Type == type))

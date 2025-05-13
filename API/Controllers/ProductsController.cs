@@ -94,8 +94,8 @@ namespace API.Controllers
         [HttpGet("brands")]
         public async Task<ActionResult<IReadOnlyList<string>>> GetProductBrands()
         {
-            // TODO::implementing the method to get the brands from the database
-            return Ok();
+            var spec = new BrandListSpecification();
+            return Ok(await repo.ListAsync(spec));
         }
 
         // api/products/types
@@ -103,8 +103,8 @@ namespace API.Controllers
         [HttpGet("types")]
         public async Task<ActionResult<IReadOnlyList<string>>> GetProductTypes()
         {
-            // TODO::implementing the method to get the brands from the database
-            return Ok();
+            var spec = new TypeListSpecification();
+            return Ok(await repo.ListAsync(spec));
         }
 
         private bool ProductExists(int id)
