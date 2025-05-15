@@ -1,3 +1,4 @@
+using API.RequestHelpers;
 using Core.Entities;
 using Core.Interface;
 using Core.Specifications;
@@ -13,15 +14,21 @@ namespace API.Controllers
     {
         // api/products
         // this will return a list of products from the database
+        // the reason we use FromQuery here because it is an object that is passed in the query string
+        // and we want to bind the query string to the object
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<Product>>> GetProducts(string? brand, string? type, string? sort)
+        public async Task<ActionResult<IReadOnlyList<Product>>> GetProducts([FromQuery]ProductSpecParams specParams)
         {
-            var specification = new ProductSpecification(brand, type, sort);
+            var specification = new ProductSpecification(specParams);
             // this will return a list of products from the database
             // the specification will be used to filter the products based on the brand and type
             var products = await repo.ListAsync(specification);
+            var count = await repo.CountAsync(specification);
 
-            return Ok(products);
+            var pagination = new Pagination<Product>(specParams.PageIndex, specParams.PageSize, count, products);
+
+
+            return Ok(pagination);
         }
 
 

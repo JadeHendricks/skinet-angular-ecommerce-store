@@ -30,6 +30,11 @@ namespace Infrastructure.Data
                 query = query.Distinct();
             }
 
+            if (specification.IsPagingEnabled)
+            {
+                query = query.Skip(specification.Skip).Take(specification.Take);
+            }
+
             return query;
         }
 
@@ -61,6 +66,11 @@ namespace Infrastructure.Data
             if (specification.isDistinct)
             {
                 selectQuery = selectQuery?.Distinct();
+            }
+
+            if (specification.IsPagingEnabled)
+            {
+                selectQuery = selectQuery?.Skip(specification.Skip).Take(specification.Take);
             }
 
             // cast here is used to convert the IQueryable<T> to IQueryable<TResult>
