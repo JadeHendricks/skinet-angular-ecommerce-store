@@ -8,9 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class ProductsController(IGenericRepository<Product> repo) : ControllerBase
+    public class ProductsController(IGenericRepository<Product> repo) : BaseApiController
     {
         // api/products
         // this will return a list of products from the database
@@ -20,15 +18,8 @@ namespace API.Controllers
         public async Task<ActionResult<IReadOnlyList<Product>>> GetProducts([FromQuery]ProductSpecParams specParams)
         {
             var specification = new ProductSpecification(specParams);
-            // this will return a list of products from the database
-            // the specification will be used to filter the products based on the brand and type
-            var products = await repo.ListAsync(specification);
-            var count = await repo.CountAsync(specification);
-
-            var pagination = new Pagination<Product>(specParams.PageIndex, specParams.PageSize, count, products);
-
-
-            return Ok(pagination);
+            
+            return await CreatePageResult(repo, specification, specParams.PageIndex, specParams.PageSize);
         }
 
 
