@@ -1,3 +1,4 @@
+using API.Middleware;
 using Core.Interface;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -14,8 +15,12 @@ builder.Services.AddDbContext<StoreContext>(opt =>
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 // if you want to use the generic repository pattern and don't know the type of the entity (generic type)
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-var app = builder.Build(); 
+builder.Services.AddCors();
 
+var app = builder.Build(); 
+app.UseMiddleware<ExceptionMiddleware>();
+// this will allow any header and any method from the specified origin
+app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200", "https://localhost:4200"));
 app.MapControllers();
 
 try 
