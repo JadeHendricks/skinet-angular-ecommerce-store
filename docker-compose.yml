@@ -9,5 +9,13 @@ services:
     volumes:
       - sql-data:/var/opt/mssql
     platform: "linux/amd64"
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+
 volumes:
+  redis-data:
   sql-data:
