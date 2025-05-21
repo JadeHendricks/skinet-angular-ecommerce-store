@@ -14,7 +14,7 @@ public class CartController(ICartService cartService) : BaseApiController
 
         // we do not use new ShoppingCart(id) here because we want to return the cart if it exists
 
-        return Ok(cart ?? new ShoppingCart { Id = id });
+        return Ok(cart ?? new ShoppingCart{ Id = id });
     }
 
     [HttpPost]
@@ -28,7 +28,7 @@ public class CartController(ICartService cartService) : BaseApiController
     }
 
     [HttpDelete]
-    public async Task<ActionResult<bool>> DeleteCart(string id)
+    public async Task<ActionResult> DeleteCart(string id)
     {
         var result = await cartService.DeleteCartAsync(id);
         
