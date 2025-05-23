@@ -8,6 +8,7 @@ import { errorInterceptor } from './core/interceptors/error.interceptor';
 import { loadingInterceptor } from './core/interceptors/loading.interceptor';
 import { InitService } from './core/services/init.service';
 import { lastValueFrom } from 'rxjs';
+import { authInterceptor } from './cores/interceptor/auth.interceptor';
 
 function initializeApp() {
   const initService = inject(InitService);
@@ -25,7 +26,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes), 
     // withInterceptors here is used to add interceptors to the http client
     // we can add multiple interceptors by chaining them
-    provideHttpClient(withInterceptors([errorInterceptor, loadingInterceptor])), 
+    provideHttpClient(withInterceptors([errorInterceptor, loadingInterceptor, authInterceptor])), 
     provideAnimationsAsync(),
     provideAppInitializer(initializeApp),
   ]

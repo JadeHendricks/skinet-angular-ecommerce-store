@@ -20,7 +20,7 @@ export class AccountService {
     // we need to set the withCredentials to true in order to send the cookies
     // to the server. This is because the server is on a different domain
     // and we need to allow cross-origin requests
-    return this.http.post<User>(this.baseUrl + 'login', values, {params, withCredentials: true});
+    return this.http.post<User>(this.baseUrl + 'login', values, {params});
   }
 
   register(values: any) {
@@ -28,7 +28,7 @@ export class AccountService {
   }
 
   getUserInfo(): Observable<User> {
-    return this.http.get<User>(this.baseUrl + 'account/user-info', {withCredentials: true}).pipe(
+    return this.http.get<User>(this.baseUrl + 'account/user-info').pipe(
       map(user => {
         this.currentUser.set(user);
         return user;
@@ -37,7 +37,7 @@ export class AccountService {
   }
 
   logout() {
-    return this.http.post(this.baseUrl + 'account/logout', {withCredentials: true});
+    return this.http.post(this.baseUrl + 'account/logout', {});
   }
 
   updateAddress(address: Address) {
