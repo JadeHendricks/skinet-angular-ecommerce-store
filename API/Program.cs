@@ -1,7 +1,9 @@
 using API.Middleware;
+using Core.Entities;
 using Core.Interface;
 using Infrastructure.Data;
 using Infrastructure.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using StackExchange.Redis;
 
@@ -32,12 +34,16 @@ builder.Services.AddSingleton<IConnectionMultiplexer>(config =>
     return ConnectionMultiplexer.Connect(configuration);
 });
 builder.Services.AddSingleton<ICartService, CartService>();
+builder.Services.AddAuthorization();
+builder.Services.AddIdentityApiEndpoints<AppUser>().AddEntityFrameworkStores<StoreContext>()
+    .AddDefaultTokenProviders();
 
 var app = builder.Build(); 
 app.UseMiddleware<ExceptionMiddleware>();
 // this will allow any header and any method from the specified origin
-app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200", "https://localhost:4200"));
+app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:4200", "https://localhost:4200"));
 app.MapControllers();
+app.MapGroup("api").MapIdentityApi<AppUser>();
 
 try 
 {
